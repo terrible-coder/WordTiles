@@ -1,5 +1,7 @@
-const fetch = require("node-fetch");
+// const fetch = require("node-fetch");
+import * as node_fetch from "node-fetch"; 
 require("dotenv").config();
+const fetch = node_fetch.default;
 
 /**
  * The authentication token for the Telegram Bot API.
@@ -15,13 +17,15 @@ const TG_TOKEN = process.env.TG_TOKEN;
  */
 const baseURL = `https://api.telegram.org/bot${TG_TOKEN}`;
 
+export function apiCall(method: string): string;
 /**
  * Creates the URL for any API method with the arguments.
- * @param {string} method The name of the API method to call.
- * @param {JSON} options JSON of the arguments to pass to the method.
+ * @param method The name of the API method to call.
+ * @param options JSON of the arguments to pass to the method.
  * @returns The query URL.
  */
-function apiCall(method, options) {
+export function apiCall(method: string, option: any): string;
+export function apiCall(method: string, options?: any) {
 	if(options === undefined) return `${baseURL}/${method}`;
 	const params = Object.getOwnPropertyNames(options);
 	const query = params.map(p => {
@@ -39,7 +43,7 @@ function apiCall(method, options) {
  * established. Make sure to call this before making any other API calls to
  * avoid leaking tokens publicly.
  */
-function check() {
+export function check() {
 	const checkURL = apiCall("getMe");
 	fetch(checkURL)
 		.then(data => data.json())
@@ -50,9 +54,4 @@ function check() {
 				process.exit(1);
 			} else console.log(`${json.result.username} online.`);
 		});
-}
-
-module.exports = {
-	apiCall: apiCall,
-	check: check
 }

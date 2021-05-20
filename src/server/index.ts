@@ -1,5 +1,5 @@
-const express = require("express");
-const lib = require("./library");
+import { default as express } from "express";
+import * as lib from "./library";
 require("dotenv").config();
 
 /**
