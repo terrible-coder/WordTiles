@@ -13,5 +13,10 @@
     "tile"
   ],
   "author": "terrible-coder",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1"
+  }
 }
