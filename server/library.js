@@ -1,8 +1,18 @@
 const fetch = require("node-fetch");
 require("dotenv").config();
 
+/**
+ * The authentication token for the Telegram Bot API.
+ * 
+ * **MAKE SURE NOT TO MAKE THIS PUBLIC.**
+ */
 const TG_TOKEN = process.env.TG_TOKEN;
 
+/**
+ * The mandatory part of the URL used to make any and every API calls.
+ * 
+ * **MAKE SURE NOT TO MAKE THIS PUBLIC.**
+ */
 const baseURL = `https://api.telegram.org/bot${TG_TOKEN}`;
 
 /**
@@ -24,7 +34,11 @@ function apiCall(method, options) {
 	return `${baseURL}/${method}?${query_string}`;
 }
 
-
+/**
+ * Checks whether connection to the Telegram API has been successfully
+ * established. Make sure to call this before making any other API calls to
+ * avoid leaking tokens publicly.
+ */
 function check() {
 	const checkURL = apiCall("getMe");
 	fetch(checkURL)
