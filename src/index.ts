@@ -2,6 +2,7 @@ import { Bot } from "grammy";
 require("dotenv").config();
 
 import { command_list } from "./core.bot/commands";
+import { WordGame } from "./core.bot/game/wordgame";
 
 /**
  * The authentication token for the Telegram Bot API.
@@ -11,6 +12,7 @@ import { command_list } from "./core.bot/commands";
 const TG_TOKEN = <string>process.env.TG_TOKEN;
 
 const bot = new Bot(TG_TOKEN);
+WordGame.bot = bot;
 
 (async () => {
 	await bot.api.setMyCommands(Object.keys(command_list).map(command => {
