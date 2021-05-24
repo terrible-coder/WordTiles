@@ -1,4 +1,5 @@
 import { User } from "@grammyjs/types";
+import { addPlayer } from "../data";
 
 /**
  * The structure for the object which stores the Player's statistics so far.
@@ -18,8 +19,6 @@ export class Player {
 
 	/**	The user's information as provided by the Telegram Bot API. */
 	readonly user: User;
-	/**	The _unique_ nickname associated with the Player. */
-	public nickname: string;
 	/** The statistics of the Player so far. */
 	readonly stats: PlayerStats;
 	/** The unique ID of the game the player is in. */
@@ -32,12 +31,19 @@ export class Player {
 	 * @param user The user's data as received from the Bot API.
 	 * @param nick The nickname of the user used to register into the database.
 	 */
-	constructor(user: User, nick: string) {
+	constructor(user: User) {
 		this.user = user;
-		this.nickname = nick;
 		this.stats = {
 			gold: 100,
 			games: { played: 0, win: 0 }
+		}
+		addPlayer(this.getData());
+	}
+
+	public getData() {
+		return {
+			user: this.user,
+			stats: this.stats
 		}
 	}
 
@@ -61,5 +67,4 @@ export class Player {
 		this.stats.games.win += status === "win"? 1: 0;
 		this.stats.gold += gold;
 	}
-
 }

@@ -28,7 +28,6 @@ Object.keys(command_list).forEach(command => {
 	});
 });
 
-bot.command("start", ctx => ctx.reply("Welcome to the game player."));
 bot.on("message:text", ctx => ctx.reply("Echo: " + ctx.message.text));
 
 bot.start();
