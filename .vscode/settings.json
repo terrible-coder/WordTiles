@@ -1,5 +1,9 @@
 {
 	"conventionalCommits.scopes": [
-		"server"
+		"server",
+		"game"
+	],
+	"cSpell.words": [
+		"wordgame"
 	]
 }

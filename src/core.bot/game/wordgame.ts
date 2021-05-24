@@ -92,6 +92,7 @@ export class WordGame {
 				"Your letters are:",
 				`\`${letters.join(" ")}\``
 			].join("\n");
+			console.log(text);
 			// send text to player `p`
 		});
 	}
