@@ -1,5 +1,6 @@
 import { randomInt } from "crypto";
 import { Bot } from "grammy";
+import { addGame, delGame } from "../data";
 import { Player } from "./player";
 
 /**
@@ -75,6 +76,7 @@ export class WordGame {
 			],
 			pot: 100
 		}
+		addGame({ game: this, player1_id: players[0].user.id, player2_id: players[1].user.id });
 	}
 
 	/**
@@ -114,5 +116,10 @@ export class WordGame {
 		const [player1, player2] = this.stats.players;
 		player1.player.finish("win", player1.gold);
 		player2.player.finish("lose", player2.gold);
+		delGame({
+			game: this,
+			player1_id: player1.player.user.id,
+			player2_id: player2.player.user.id
+		});
 	}
 }
