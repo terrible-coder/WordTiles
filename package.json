@@ -20,6 +20,7 @@
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
     "grammy": "^1.1.4",
+    "nedb": "^1.8.0",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
