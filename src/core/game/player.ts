@@ -1,5 +1,5 @@
 import { User } from "@grammyjs/types";
-import { addPlayer } from "../data";
+import { addPlayer, PlayerData } from "../data";
 
 /**
  * The structure for the object which stores the Player's statistics so far.
@@ -40,12 +40,28 @@ export class Player {
 		addPlayer(this.getData());
 	}
 
-	public getData() {
+	/**
+	 * Formats the Player object data into a JSON object that can be easily
+	 * stored in a database.
+	 * @returns Data formatted to be stored in the database.
+	 */
+	public getData(): PlayerData {
 		return {
+			_id: this.user.id,
 			user: this.user,
 			stats: this.stats
 		}
 	}
+
+	/**
+	 * Creates a Player object from an entry from the database.
+	 * @param data Data from database.
+	 */
+	public getPlayer(data: PlayerData) {
+		const p = new Player(data.user);
+		p.stats.gold = data.stats.gold;
+		p.stats.games = data.stats.games;
+	} 
 
 	/**
 	 * Adds the Player to a game.
