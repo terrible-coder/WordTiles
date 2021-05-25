@@ -83,19 +83,13 @@ export class WordGame {
 	 * Distribute the letter tiles to the players.
 	 */
 	public distribute() {
-		this.stats.players.forEach(() => {
-			let letters: string[] = [];
-			for(let i = 0; i < vowel_count; i++)
-				letters.push(random_letter("vowel"));
-			for(let i = 0; i < consonant_count; i++)
-				letters.push(random_letter("consonant"));
-			letters = random_sort(letters);
+		this.stats.players.forEach(p => {
+			p.letters = getLetters();
 			const text = [
 				"Your letters are:",
-				`\`${letters.join(" ")}\``
+				`\`${p.letters.join(" ")}\``
 			].join("\n");
-			console.log(text);
-			// send text to player `p`
+			p.player.sendMessage(text);
 		});
 	}
 
@@ -103,8 +97,12 @@ export class WordGame {
 	 * Reveal the letter tiles of the players to their opponents.
 	 */
 	public reveal() {
-		// send(this.stats.players[0], this.stats.players[1].letters);
-		// send(this.stats.players[1], this.stats.players[0].letters);
+		const [p1, p2] = this.stats.players;
+		const base = "Your opponent has the letters:\n\n";
+		const text1 = base + `\`${p2.letters.join(" ")}\``;
+		const text2 = base + `\`${p1.letters.join(" ")}\``;
+		p1.player.sendMessage(text1);
+		p2.player.sendMessage(text2);
 	}
 
 	start() {
@@ -122,4 +120,14 @@ export class WordGame {
 			player2_id: player2.player.user.id
 		});
 	}
+}
+
+function getLetters() {
+	let letters: string[] = [];
+	for (let i = 0; i < vowel_count; i++)
+		letters.push(random_letter("vowel"));
+	for (let i = 0; i < consonant_count; i++)
+		letters.push(random_letter("consonant"));
+	letters = random_sort(letters);
+	return letters;
 }
