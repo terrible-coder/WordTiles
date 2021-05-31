@@ -2,11 +2,17 @@ import { Context } from "grammy";
 import { Player } from "./game/player";
 import { menu } from "./menu";
 
+/**
+ * Text displayed upon using the /start command.
+ */
 const start = `Welcome to the WordTiles game bot!
 I hope you have a good time playing.
 /register yourself before anything. Once you have read the /rules, you can start playing the /game.
 /help will be given to all those who ask for it.`;
 
+/**
+ * Text displayed upon using the /help command.
+ */
 const help = `I am here to help you.
 
 This is a 2 player game for bored friends/couples stuck at home.
@@ -17,6 +23,9 @@ This is a 2 player game for bored friends/couples stuck at home.
 
 Make sure you have a username for your Telegram account. That is how this bot keeps track of players in the database and during any match.`
 
+/**
+ * Text displayed upon using the /rules command.
+ */
 const rules = `Okay, so here are the rules:
 Both players are given 4 vowels and 7 consonants.`;
 

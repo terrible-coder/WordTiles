@@ -1,5 +1,10 @@
 import { Context, InlineKeyboard } from "grammy";
 
+/**
+ * The `menu` object stores all the inline keyboards used by the bot. The
+ * property name for the keyboards should match the callback data which upon
+ * receiving returns the inline keyboard.
+ */
 export const menu = {
 	game_menu: new InlineKeyboard()
 					.text("New game", "new_game").row()
@@ -10,6 +15,10 @@ export const menu = {
 					.text("<< Back", "new_game_back")
 };
 
+/**
+ * An object which maps the callback data received by the bot to the response
+ * the bot is supposed to take for the respective callback.
+ */
 export const callbacks: {
 	[key: string]: (ctx: Context) => any;
 } = {
