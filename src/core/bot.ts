@@ -28,7 +28,6 @@ Object.keys(command_list).forEach(command => {
 	});
 });
 
-
 const game_menu = new InlineKeyboard()
 					.text("New game", "new_game").row()
 					.text("Player stats", "stats");
@@ -48,7 +47,7 @@ bot.command("game", ctx => ctx.reply("Game menu", {
 	reply_markup: game_menu
 }));
 
-bot.callbackQuery("new_game", ctx => ctx.reply("Start new game", {
+bot.callbackQuery("new_game", ctx => ctx.editMessageReplyMarkup({
 	reply_markup: new_game
 }));
 
@@ -58,10 +57,9 @@ bot.callbackQuery("1v1", () => {
 	// start new game
 });
 
-bot.callbackQuery("new_game_back", ctx => ctx.reply("Game menu", {
-	reply_markup: new_game
+bot.callbackQuery("new_game_back", ctx => ctx.editMessageReplyMarkup({
+	reply_markup: game_menu
 }));
-
 
 bot.on("message:text", ctx => ctx.reply("Echo: " + ctx.message.text));
 
