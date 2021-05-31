@@ -11,7 +11,7 @@ export const menu = {
 };
 
 export const callbacks: {
-	[key: string]: Function;
+	[key: string]: (ctx: Context) => any;
 } = {
 	"new_game": (ctx: Context) => ctx.editMessageReplyMarkup({
 		reply_markup: menu.new_game
