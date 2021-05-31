@@ -1,4 +1,4 @@
-import { Bot, InlineKeyboard } from "grammy";
+import { Bot } from "grammy";
 require("dotenv").config();
 
 import { command_list } from "./commands";
@@ -22,44 +22,8 @@ export const bot = new Bot(TG_TOKEN);
 })();
 
 Object.keys(command_list).forEach(command => {
-	bot.command(command, ctx => {
-		const message = command_list[command].message;
-		message.forEach(msg => ctx.reply(msg));
-	});
+	bot.command(command, command_list[command].res);
 });
-
-const game_menu = new InlineKeyboard()
-					.text("New game", "new_game").row()
-					.text("Player stats", "stats");
-
-const new_game = new InlineKeyboard()
-					.text("One v One", "1v1").row()
-					.text("<< Back", "new_game_back");
-
-(async () => {
-	await bot.api.setMyCommands([{
-		command: "game",
-		description: "Game menu"
-	}])
-})();
-
-bot.command("game", ctx => ctx.reply("Game menu", {
-	reply_markup: game_menu
-}));
-
-bot.callbackQuery("new_game", ctx => ctx.editMessageReplyMarkup({
-	reply_markup: new_game
-}));
-
-bot.callbackQuery("stats", ctx => ctx.reply("fetch player data"));
-
-bot.callbackQuery("1v1", () => {
-	// start new game
-});
-
-bot.callbackQuery("new_game_back", ctx => ctx.editMessageReplyMarkup({
-	reply_markup: game_menu
-}));
 
 bot.on("message:text", ctx => ctx.reply("Echo: " + ctx.message.text));
 

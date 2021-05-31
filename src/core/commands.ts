@@ -1,3 +1,6 @@
+import { Context } from "grammy";
+import { menu } from "./menu";
+
 const help = `I am here to help you.
 Don't run away from me.`
 
@@ -6,35 +9,34 @@ Both players are given 4 vowels and 7 consonants.`;
 
 const register = `Hey! Please enter your nickname:`;
 
-const edit_nick = `Your current nickname is smoll_pp. Enter your new nickname:
-(enter ❌ to skip change)`;
-
 export type Commands = {
 	[key: string]: {
 		desc: string,
-		message: string[]
+		res: (ctx: Context) => any;
 	}
 }
 
 export const command_list: Commands = {
 	start: {
 		desc: "Starts the bot",
-		message: ["You started the bot.", "wow"]
+		res: ctx => ["You started the bot.", "wow"].forEach(line => ctx.reply(line))
 	},
 	help: {
 		desc: "Send help!",
-		message: [help, "I hope that helped."]
+		res: ctx => [help, "I hope that helped."].forEach(line => ctx.reply(line))
 	},
 	rules: {
 		desc: "How to play?",
-		message: [rules, "Start playing."]
+		res: ctx => [rules, "Start playing."].forEach(line => ctx.reply(line))
 	},
 	register: {
 		desc: "I wanna join!",
-		message: [register, "Happy playing."]
+		res: ctx => [register, "Happy playing."].forEach(line => ctx.reply(line))
 	},
-	edit_nick: {
-		desc: "I don't like my name.",
-		message: [edit_nick]
+	game: {
+		desc: "Let's play!",
+		res: ctx => ctx.reply("Game menu", {
+			reply_markup: menu.game_menu
+		})
 	}
 }
