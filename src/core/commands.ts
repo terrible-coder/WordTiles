@@ -1,4 +1,5 @@
 import { Context } from "grammy";
+import { Player } from "./game/player";
 import { menu } from "./menu";
 
 const help = `I am here to help you.
@@ -6,8 +7,6 @@ Don't run away from me.`
 
 const rules = `Okay, so here are the rules:
 Both players are given 4 vowels and 7 consonants.`;
-
-const register = `Hey! Please enter your nickname:`;
 
 export type Commands = {
 	[key: string]: {
@@ -31,7 +30,14 @@ export const command_list: Commands = {
 	},
 	register: {
 		desc: "I wanna join!",
-		res: ctx => [register, "Happy playing."].forEach(line => ctx.reply(line))
+		res: ctx => {
+			if(ctx.from === undefined)
+				return ctx.reply("Something went wrong. Please try again.");
+			if(!ctx.from.username)
+				return ctx.reply("Please make sure you have a username for your account. It is used to register and identify players.");
+			new Player(ctx.from);
+			return ctx.reply("Successfully registered");
+		}
 	},
 	game: {
 		desc: "Let's play!",
