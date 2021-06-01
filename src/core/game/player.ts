@@ -1,4 +1,5 @@
 import { User } from "@grammyjs/types";
+import { bot } from "../bot";
 import { addPlayer, PlayerData } from "../data";
 
 /**
@@ -82,5 +83,9 @@ export class Player {
 		this.stats.games.played++;
 		this.stats.games.win += status === "win"? 1: 0;
 		this.stats.gold += gold;
+	}
+
+	public sendMessage(text: string, ...args: any) {
+		bot.api.sendMessage(this.user.id, text, ...args);
 	}
 }
