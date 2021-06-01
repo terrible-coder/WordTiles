@@ -2,6 +2,7 @@ import { Bot } from "grammy";
 require("dotenv").config();
 
 import { command_list } from "./commands";
+import { callbacks } from "./menu";
 
 /**
  * The authentication token for the Telegram Bot API.
@@ -22,11 +23,10 @@ export const bot = new Bot(TG_TOKEN);
 })();
 
 Object.keys(command_list).forEach(command => {
-	bot.command(command, ctx => {
-		const message = command_list[command].message;
-		message.forEach(msg => ctx.reply(msg));
-	});
+	bot.command(command, command_list[command].res);
 });
+
+Object.keys(callbacks).forEach(data => bot.callbackQuery(data, callbacks[data]));
 
 bot.on("message:text", ctx => ctx.reply("Echo: " + ctx.message.text));
 
