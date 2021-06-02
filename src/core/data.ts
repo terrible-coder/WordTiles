@@ -28,6 +28,14 @@ export function addPlayer(player: PlayerData) {
 	console.log("player added");
 }
 
+export async function getPlayer(id: number, callback: Function) {
+	playerData.findOne({ _id: id }, { _id: 1 }, (err, doc) => {
+		if (err !== null)
+			console.log("something went wrong", err);
+		callback(doc);
+	});
+}
+
 export type GameData = {
 	game: WordGame,
 	player1_id: number,

@@ -1,4 +1,6 @@
 import { Context, InlineKeyboard } from "grammy";
+import { getPlayer } from "./data";
+import { Player } from "./game/player";
 
 /**
  * The `menu` object stores all the inline keyboards used by the bot. The
@@ -26,7 +28,23 @@ export const callbacks: {
 		reply_markup: menu.new_game
 	}),
 
-	"stats": (ctx: Context) => ctx.reply("fetch player data"),
+	"stats": (ctx: Context) => {
+		if(!ctx.from)
+			return ctx.reply("Message was not from a user(??)");
+		console.log(ctx.from);
+		getPlayer(ctx.from.id, (player: Player | undefined) => {
+			if(!player)
+				return ctx.reply("Player not registered on server yet. Consider /register.");
+			const message = `Player ${player.user.username}
+	
+	_Played_: ${player.stats.games.played}
+	_Games won_: ${player.stats.games.win}
+	_Gold won_: ${player.stats.gold}`;
+			return ctx.reply(message, {
+				parse_mode: "MarkdownV2"
+			});
+		});
+	},
 
 	"new_game_back": (ctx: Context) => ctx.editMessageReplyMarkup({
 		reply_markup: menu.game_menu
