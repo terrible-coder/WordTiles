@@ -38,18 +38,15 @@ export async function getPlayer(id: number, callback: Function) {
 
 export type GameData = {
 	game: WordGame,
-	player1_id: number,
-	player2_id: number,
+	playerID: [number, number],
 }
 
-const gamesData: Map<number, WordGame> = new Map<number, WordGame>();
+const gamesData: Map<[number, number], WordGame> = new Map<[number, number], WordGame>();
 
 export function addGame(game: GameData) {
-	gamesData.set(game.player1_id, game.game);
-	gamesData.set(game.player2_id, game.game);
+	gamesData.set(game.playerID, game.game);
 }
 
 export function delGame(game: GameData) {
-	gamesData.delete(game.player1_id);
-	gamesData.delete(game.player2_id);
+	gamesData.delete(game.playerID);
 }

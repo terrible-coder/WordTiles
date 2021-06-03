@@ -76,7 +76,7 @@ export class WordGame {
 			],
 			pot: 100
 		}
-		addGame({ game: this, player1_id: players[0].user.id, player2_id: players[1].user.id });
+		addGame({ game: this, playerID: [players[0].user.id, players[1].user.id] });
 	}
 
 	/**
@@ -116,8 +116,7 @@ export class WordGame {
 		player2.player.finish("lose", player2.gold);
 		delGame({
 			game: this,
-			player1_id: player1.player.user.id,
-			player2_id: player2.player.user.id
+			playerID: [player1.player.user.id, player2.player.user.id]
 		});
 	}
 }
