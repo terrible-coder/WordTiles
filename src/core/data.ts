@@ -1,6 +1,6 @@
 import { User } from "@grammyjs/types";
 import { default as Datastore } from "nedb";
-import { PlayerStats } from "./game/player";
+import { Player, PlayerStats } from "./game/player";
 import { WordGame } from "./game/wordgame";
 
 /**
@@ -52,6 +52,23 @@ export async function getPlayer(id: number, callback: Function) {
 	});
 }
 
+const onlinePlayers = new Map<number, Player>();
+
+export function addOnlinePlayer(player: Player) {
+	onlinePlayers.set(player.user.id, player);
+}
+
+export function getOnlinePlayer(id: number) {
+	return onlinePlayers.get(id);
+}
+
+export function delOnlinePlayer(id: number): void;
+export function delOnlinePlayer(player: Player): void;
+export function delOnlinePlayer(a: number | Player) {
+	const id = (a instanceof Player)? a.user.id: a;
+	onlinePlayers.delete(id);
+}
+
 /**
  * The structure of the object used to store an ongoing game's information.
  */
@@ -63,7 +80,7 @@ export type GameData = {
 /**
  * The "database" for all ongoing games. Maps the players' IDs to the game object.
  */
-const gamesData: Map<[number, number], WordGame> = new Map<[number, number], WordGame>();
+const gamesData = new Map<[number, number], WordGame>();
 
 /**
  * Inserts a new game's data into the game database.
