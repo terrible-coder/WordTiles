@@ -50,3 +50,17 @@ export function addGame(game: GameData) {
 export function delGame(game: GameData) {
 	gamesData.delete(game.playerID);
 }
+
+export function getGameIDs() {
+	const IDs: number[] = [];
+	for(let value of gamesData.values())
+		IDs.push(value.game_id);
+	return IDs;
+}
+
+export function getPlayerIDs() {
+	const IDs: number[] = [];
+	for(let key of gamesData.keys())
+		IDs.push(...key);
+	return IDs;
+}
