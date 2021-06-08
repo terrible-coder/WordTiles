@@ -119,3 +119,15 @@ export function getPlayerIDs() {
 		IDs.push(...key);
 	return IDs;
 }
+
+export function getPlayerGame(id: number): WordGame | undefined;
+export function getPlayerGame(player: Player): WordGame | undefined;
+export function getPlayerGame(a: Player | number) {
+	const id1 = a instanceof Player? a.user.id : a;
+	const IDs = getPlayerIDs();
+	const index = IDs.indexOf(id1);
+	if(index === -1)
+		return undefined;
+	const key: [number, number] = index % 2 === 0? [IDs[index - 1], id1] : [id1, IDs[index + 1]];
+	return gamesData.get(key);
+}
