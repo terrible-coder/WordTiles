@@ -52,17 +52,40 @@ export async function getPlayer(id: number, callback: Function) {
 	});
 }
 
+/**
+ * Record of all players who are currently online in a game.
+ */
 const onlinePlayers = new Map<number, Player>();
 
+/**
+ * Adds a player to the online player records. Call only when starting a game.
+ * @param player Player to add.
+ */
 export function addOnlinePlayer(player: Player) {
 	onlinePlayers.set(player.user.id, player);
 }
 
+/**
+ * Retrieve the player object from the online player records. If the player is
+ * not currently online in any game, returns undefined.
+ * @param id Unique User ID of the Player.
+ * @returns Player object.
+ */
 export function getOnlinePlayer(id: number) {
 	return onlinePlayers.get(id);
 }
 
+/**
+ * Deletes the record of a player from the online records. Call only when a game
+ * finishes or is terminated.
+ * @param id The Player's unique User ID to.
+ */
 export function delOnlinePlayer(id: number): void;
+/**
+ * Deletes the record of a player from the online records. Call only when a game
+ * finishes or is terminated.
+ * @param player The Player object.
+ */
 export function delOnlinePlayer(player: Player): void;
 export function delOnlinePlayer(a: number | Player) {
 	const id = (a instanceof Player)? a.user.id: a;
@@ -120,7 +143,17 @@ export function getPlayerIDs() {
 	return IDs;
 }
 
+/**
+ * Retrieve the WordGame object the player is playing in. Returns undefined if
+ * player is not online in any game.
+ * @param id The unique User ID of Player.
+ */
 export function getPlayerGame(id: number): WordGame | undefined;
+/**
+ * Retrieve the WordGame object the player is playing in. Returns undefined if
+ * player is not online in any game.
+ * @param player The Player object.
+ */
 export function getPlayerGame(player: Player): WordGame | undefined;
 export function getPlayerGame(a: Player | number) {
 	const id1 = a instanceof Player? a.user.id : a;
