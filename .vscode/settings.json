@@ -2,7 +2,7 @@
 	"conventionalCommits.scopes": [
 		"server",
 		"game",
-		"db"
+		"data"
 	],
 	"cSpell.words": [
 		"wordgame"
