@@ -65,5 +65,15 @@ export const command_list: Commands = {
 		res: ctx => ctx.reply("Game menu", {
 			reply_markup: menu.game_menu
 		})
+	},
+	join: {
+		desc: "I wanna join a game...",
+		res: ctx => {
+			if(!ctx.match)
+				return ctx.reply("Please enter a room ID after the command. Eg.: /join 1129");
+			if(isNaN(<any>ctx.match))
+				return ctx.reply("Please enter a valid room ID.");
+			// look up room ID and add player to game
+		}
 	}
 }
